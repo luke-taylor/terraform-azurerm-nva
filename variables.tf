@@ -52,6 +52,7 @@ variable "network_interfaces" {
     private_ip_address             = optional(string)
     private_ip_address_allocation  = optional(string, "Dynamic")
     public_ip_creation_enabled     = optional(bool, false)
+    tags                           = optional(map(string), {})
     public_ip_config = optional(object({
       name              = optional(string)
       allocation_method = optional(string, "Dynamic")
@@ -61,7 +62,6 @@ variable "network_interfaces" {
     subnet_config = object({
       name             = optional(string)
       address_prefixes = list(string)
-      tags             = optional(map(string))
     })
   }))
   default  = {}
@@ -112,4 +112,10 @@ variable "tracing_tags_prefix" {
   default     = "avm_"
   description = "Default prefix for generated tracing tags"
   nullable    = false
+}
+
+variable "tags" {
+  description = "A mapping of tags to assign to the resource."
+  type        = map(string)
+  default     = {}
 }
