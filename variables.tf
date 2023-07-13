@@ -8,9 +8,11 @@ variable "admin_username" {
   description = "The admin username for the virtual machine."
 }
 
-variable "custom_data" {
+variable "nva_config_file_path" {
   type        = string
   description = "The custom data to use for the virtual machine."
+  default     = ""
+  nullable    = false
 }
 
 variable "image" {
@@ -84,6 +86,11 @@ variable "network_interfaces" {
   validation {
     condition     = length([for k, v in var.network_interfaces : v.primary_interface if v.primary_interface]) == 1
     error_message = "At least one and only one network interface can be marked as primary."
+  }
+
+  validation {
+    condition     = length(var.network_interfaces) > 0
+    error_message = "At least one network interface must be specified."
   }
 }
 

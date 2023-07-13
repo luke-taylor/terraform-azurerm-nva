@@ -42,23 +42,7 @@ module "csr" {
   resource_group_name  = azurerm_resource_group.csr.name
   virtual_network_name = azurerm_virtual_network.csr.name
   location             = azurerm_resource_group.csr.location
-  custom_data          = <<EOF
-    config t
-    router bgp 65003
-    bgp log-neighbor-changes
-    neighbor 10.0.6.4 remote-as 65515
-    neighbor 10.0.6.4 ebgp-multihop 255
-    neighbor 10.0.6.4 update-source GigabitEthernet2
-    neighbor 10.0.6.5 remote-as 65515
-    neighbor 10.0.6.5 ebgp-multihop 255
-    neighbor 10.0.6.5 update-source GigabitEthernet2
-    !
-    ip route 10.0.0.0 255.0.0.0 10.0.14.4 
-    ip route 172.16.0.0 255.240.0.0 10.0.14.4 
-    ip route 192.168.0.0 255.255.0.0 10.0.14.4 
-    !
-    wr mem
-EOF
+  nva_config_file_path = "${path.root}/csr_config.txt"
   network_interfaces = {
     public = {
       primary_interface          = true
