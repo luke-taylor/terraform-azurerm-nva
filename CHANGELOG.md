@@ -4,6 +4,7 @@
 
 **Merged pull requests:**
 
+- Update Custom Data Input [\#3](https://github.com/luke-taylor/terraform-azurerm-nva/pull/3) ([luke-taylor](https://github.com/luke-taylor))
 - Update Test [\#2](https://github.com/luke-taylor/terraform-azurerm-nva/pull/2) ([luke-taylor](https://github.com/luke-taylor))
 
 

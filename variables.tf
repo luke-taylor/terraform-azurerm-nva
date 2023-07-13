@@ -8,13 +8,6 @@ variable "admin_username" {
   description = "The admin username for the virtual machine."
 }
 
-variable "nva_config_file_path" {
-  type        = string
-  description = "The custom data to use for the virtual machine."
-  default     = ""
-  nullable    = false
-}
-
 variable "image" {
   type = object({
     plan_id      = string
@@ -87,11 +80,13 @@ variable "network_interfaces" {
     condition     = length([for k, v in var.network_interfaces : v.primary_interface if v.primary_interface]) == 1
     error_message = "At least one and only one network interface can be marked as primary."
   }
+}
 
-  validation {
-    condition     = length(var.network_interfaces) > 0
-    error_message = "At least one network interface must be specified."
-  }
+variable "nva_config_file_path" {
+  type        = string
+  default     = ""
+  description = "The custom data to use for the virtual machine."
+  nullable    = false
 }
 
 variable "os_disk" {
