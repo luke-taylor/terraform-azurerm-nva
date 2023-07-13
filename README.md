@@ -1,23 +1,94 @@
-# Microsoft Verified Terraform Module
+# terraform-azurerm-nva
 
-The Verified Terraform module is a template repository to help developers create their own Terraform Module.
+This opinionated module deploys a Virtual Machine (NVA) along with its necessary dependencies including Subnets, Network Interfaces, and Public Ips. 
 
-As we've used Microsoft 1ES Runners Pool as our acceptance test runner, **only Microsoft members could use this template for now**.
+## Features 
+- Scale Network Interfaces. 
+- Input NVA configuration file. 
 
-Enjoy it by following steps:
+## Prerequisites 
+- Resource Group.
+- Virtual Network. 
+## Example 
+This example uses a Cisco CSR 1000v for the deployment. 
 
-1. Use [this template](https://github.com/Azure/terraform-verified-module) to create your repository.
-2. Read [Onboard 1ES hosted Github Runners Pool through Azure Portal](https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/1es-github-runners/createpoolportal), install [1ES Resource Management](https://github.com/apps/1es-resource-management) on your repo.
-3. Add a Github [Environment](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment) named **acctests** in your repo, setup [**Required Reviewers**](https://docs.github.com/en/actions/deployment/targeting-different-environments/using-environments-for-deployment#required-reviewers).
-4. Update [`acc-test.yaml`](.github/workflows/acc-test.yaml), modify `runs-on: [self-hosted, 1ES.Pool=<YOUR_REPO_NAME>]` with your 1es runners' pool name (basically it's your repo's name).
-5. Write Terraform code in a new branch.
-6. Run `docker run --rm -v ${pwd}:/src -w /src mcr.microsoft.com/azterraform:latest make pre-commit` to format the code.
-7. Run `docker run --rm -v $(pwd):/src -w /src mcr.microsoft.com/azterraform:latest make pr-check` to run the check in local.
-8. Create a pull request for the main branch.
-    * CI pr-check will be executed automatically.
-    * Once pr-check was passed, with manually approval, the e2e test and version upgrade test would be executed.
-9. Merge pull request.
-10. Enjoy it!
+Start with populating the .txt configuration file for the Cisco CSR in your root directory. 
+```txt
+# csr_config.txt
+
+ip route 10.0.0.0 255.0.0.0 10.0.2.4 
+ip route 172.16.0.0 255.240.0.0 10.0.2.4 
+ip route 192.168.0.0 255.255.0.0 10.0.2.4 
+!
+wr mem
+
+```
+
+Next create the Terraform configuration as follows, remembering to update the module version. 
+```hcl 
+resource "random_password" "password" {
+  length           = 12
+  min_lower        = 2
+  min_numeric      = 2
+  min_special      = 2
+  min_upper        = 2
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+  special          = true
+}
+
+resource "azurerm_marketplace_agreement" "csr" {
+  publisher = "cisco"
+  offer     = "cisco-csr-1000v"
+  plan      = "16_12-byol"
+}
+
+resource "azurerm_resource_group" "csr" {
+  location = "northeurope"
+  name     = "rg-csr"
+}
+
+resource "azurerm_virtual_network" "csr" {
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.csr.location
+  name                = "vnet-hub"
+  resource_group_name = azurerm_resource_group.csr.name
+}
+
+module "csr" {
+  source  = "luke-taylor/nva/azurerm"
+  version = "<VERSION>"
+
+  admin_password = "random_password.password.result"
+  admin_username = "azureuser"
+  image = {
+    publisher_id = "cisco"
+    product_id   = "cisco-csr-1000v"
+    plan_id      = "16_12-byol"
+    version      = "latest"
+  }
+  virtual_machine_name = "vm-csr"
+  vm_size              = "Standard_D3_v2"
+  resource_group_name  = azurerm_resource_group.csr.name
+  virtual_network_name = azurerm_virtual_network.csr.name
+  location             = azurerm_resource_group.csr.location
+  nva_config_file_path = "${path.root}/csr_config.txt"
+  network_interfaces = {
+    public = {
+      primary_interface          = true
+      public_ip_creation_enabled = true
+      subnet_config = {
+        address_prefixes = ["10.0.1.0/24"]
+      }
+    }
+    private = {
+      subnet_config = {
+        address_prefixes = ["10.0.2.0/24"]
+      }
+    }
+  }
+}
+
+```
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements

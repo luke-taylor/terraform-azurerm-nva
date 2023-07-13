@@ -37,7 +37,7 @@ module "csr" {
     plan_id      = "16_12-byol"
     version      = "latest"
   }
-  virtual_machine_name = "csr-003"
+  virtual_machine_name = "vm-csr"
   vm_size              = "Standard_D3_v2"
   resource_group_name  = azurerm_resource_group.csr.name
   virtual_network_name = azurerm_virtual_network.csr.name
@@ -48,12 +48,12 @@ module "csr" {
       primary_interface          = true
       public_ip_creation_enabled = true
       subnet_config = {
-        address_prefixes = ["10.0.13.0/24"]
+        address_prefixes = ["10.0.1.0/24"]
       }
     }
     private = {
       subnet_config = {
-        address_prefixes = ["10.0.14.0/24"]
+        address_prefixes = ["10.0.2.0/24"]
       }
     }
   }
