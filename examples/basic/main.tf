@@ -1,7 +1,35 @@
+resource "random_password" "password" {
+  length           = 12
+  special          = true
+  min_lower        = 2
+  min_upper        = 2
+  min_numeric      = 2
+  min_special      = 2
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
+# resource "azurerm_marketplace_agreement" "csr" {
+#   publisher = "cisco"
+#   offer     = "cisco-csr-1000v"
+#   plan      = "16_12-byol"
+# }
+
+resource "azurerm_resource_group" "csr" {
+  name     = "rg-csr"
+  location = "northeurope"
+}
+
+resource "azurerm_virtual_network" "csr" {
+  name                = "vnet-hub"
+  location            = azurerm_resource_group.csr.location
+  resource_group_name = azurerm_resource_group.csr.name
+  address_space       = ["10.0.0.0/16"]
+}
+
 module "csr" {
   source = "../.."
 
-  admin_password = "Abcdef123456"
+  admin_password = random_password.password.result
   admin_username = "azureuser"
   image = {
     publisher_id = "cisco"
@@ -11,9 +39,9 @@ module "csr" {
   }
   virtual_machine_name = "csr-003"
   vm_size              = "Standard_D3_v2"
-  resource_group_name  = "rg-wth"
-  virtual_network_name = "hub"
-  location             = "northeurope"
+  resource_group_name  = azurerm_resource_group.csr.name
+  virtual_network_name = azurerm_virtual_network.csr.name
+  location             = azurerm_resource_group.csr.location
   custom_data          = <<EOF
     config t
     router bgp 65003

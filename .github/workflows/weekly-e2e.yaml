@@ -9,19 +9,24 @@ permissions:
 
 jobs:
   full-e2e-check:
-    runs-on: [self-hosted, 1ES.Pool=<YOUR_REPO_NAME>]
+    runs-on: ubuntu-latest
     environment:
       name: crontests
+    env:
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
     steps:
       - name: checkout
         uses: actions/checkout@v3
       - name: init
         run: |
-          docker run --rm -v $(pwd):/src -w /src mcr.microsoft.com/azterraform:latest make generate
+          docker run --rm -v $(pwd):/src -w /src -e ARM_SUBSCRIPTION_ID -e ARM_TENANT_ID -e ARM_CLIENT_ID -e ARM_CLIENT_SECRET  mcr.microsoft.com/azterraform:latest make generate
       - name: e2e test
         continue-on-error: true
         run: |
-          sh scripts/ci-e2e.sh
+          sh scripts/run-e2e-test.sh
       - name: Update
         run: |
           sh scripts/ci-update-test-record.sh
