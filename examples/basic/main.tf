@@ -1,11 +1,11 @@
 resource "random_password" "password" {
   length           = 12
-  special          = true
   min_lower        = 2
-  min_upper        = 2
   min_numeric      = 2
   min_special      = 2
+  min_upper        = 2
   override_special = "!#$%&*()-_=+[]{}<>:?"
+  special          = true
 }
 
 # resource "azurerm_marketplace_agreement" "csr" {
@@ -15,15 +15,15 @@ resource "random_password" "password" {
 # }
 
 resource "azurerm_resource_group" "csr" {
-  name     = "rg-csr"
   location = "northeurope"
+  name     = "rg-csr"
 }
 
 resource "azurerm_virtual_network" "csr" {
-  name                = "vnet-hub"
-  location            = azurerm_resource_group.csr.location
-  resource_group_name = azurerm_resource_group.csr.name
   address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.csr.location
+  name                = "vnet-hub"
+  resource_group_name = azurerm_resource_group.csr.name
 }
 
 module "csr" {

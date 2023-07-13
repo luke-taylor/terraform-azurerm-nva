@@ -40,13 +40,12 @@ locals {
       }
     }
   }
-
-  primary_network_interface_key = element([
-    for k, v in var.network_interfaces : k if v.primary_interface
-  ], 0)
   other_network_interface_keys = [
     for k, v in var.network_interfaces : k if !v.primary_interface
   ]
+  primary_network_interface_key = element([
+    for k, v in var.network_interfaces : k if v.primary_interface
+  ], 0)
 }
 
 locals {

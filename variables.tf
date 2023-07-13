@@ -1,50 +1,63 @@
-variable "resource_group_name" {
-  description = "The name of the resource group."
+variable "admin_password" {
   type        = string
+  description = "The admin password for the virtual machine."
 }
 
-variable "virtual_network_name" {
-  description = "The name of the virtual network."
+variable "admin_username" {
   type        = string
+  description = "The admin username for the virtual machine."
 }
 
-variable "location" {
-  description = "The location/region of the resources."
+variable "custom_data" {
   type        = string
-}
-
-variable "os_disk" {
-  description = "The os disk configuration to use for the virtual machine."
-  type = object({
-    caching              = optional(string, "ReadOnly")
-    storage_account_type = optional(string, "Standard_LRS")
-    name                 = optional(string, null)
-  })
-  default  = {}
-  nullable = false
-}
-
-variable "identity" {
-  description = "values for the identity to use for the virtual machine."
-  type = object({
-    type         = string
-    identity_ids = optional(list(string))
-  })
-  default = null
+  description = "The custom data to use for the virtual machine."
 }
 
 variable "image" {
-  description = "values for the image to use for the virtual machine."
   type = object({
     plan_id      = string
     publisher_id = string
     product_id   = string
     version      = optional(string, "latest")
   })
+  description = "values for the image to use for the virtual machine."
+}
+
+variable "location" {
+  type        = string
+  description = "The location/region of the resources."
+}
+
+variable "resource_group_name" {
+  type        = string
+  description = "The name of the resource group."
+}
+
+variable "virtual_machine_name" {
+  type        = string
+  description = "The name of the virtual machine."
+}
+
+variable "virtual_network_name" {
+  type        = string
+  description = "The name of the virtual network."
+}
+
+variable "vm_size" {
+  type        = string
+  description = "The size of the virtual machine."
+}
+
+variable "identity" {
+  type = object({
+    type         = string
+    identity_ids = optional(list(string))
+  })
+  default     = null
+  description = "values for the identity to use for the virtual machine."
 }
 
 variable "network_interfaces" {
-  description = "A map of network_interfaces to create."
   type = map(object({
     accelerated_networking_enabled = optional(bool)
     name                           = optional(string)
@@ -64,8 +77,9 @@ variable "network_interfaces" {
       address_prefixes = list(string)
     })
   }))
-  default  = {}
-  nullable = false
+  default     = {}
+  description = "A map of network_interfaces to create."
+  nullable    = false
 
   validation {
     condition     = length([for k, v in var.network_interfaces : v.primary_interface if v.primary_interface]) == 1
@@ -73,29 +87,21 @@ variable "network_interfaces" {
   }
 }
 
-variable "admin_username" {
-  description = "The admin username for the virtual machine."
-  type        = string
+variable "os_disk" {
+  type = object({
+    caching              = optional(string, "ReadOnly")
+    storage_account_type = optional(string, "Standard_LRS")
+    name                 = optional(string, null)
+  })
+  default     = {}
+  description = "The os disk configuration to use for the virtual machine."
+  nullable    = false
 }
 
-variable "admin_password" {
-  description = "The admin password for the virtual machine."
-  type        = string
-}
-
-variable "virtual_machine_name" {
-  description = "The name of the virtual machine."
-  type        = string
-}
-
-variable "vm_size" {
-  description = "The size of the virtual machine."
-  type        = string
-}
-
-variable "custom_data" {
-  description = "The custom data to use for the virtual machine."
-  type        = string
+variable "tags" {
+  type        = map(string)
+  default     = {}
+  description = "A mapping of tags to assign to the resource."
 }
 
 # tflint-ignore: terraform_unused_declarations
@@ -112,10 +118,4 @@ variable "tracing_tags_prefix" {
   default     = "avm_"
   description = "Default prefix for generated tracing tags"
   nullable    = false
-}
-
-variable "tags" {
-  description = "A mapping of tags to assign to the resource."
-  type        = map(string)
-  default     = {}
 }
