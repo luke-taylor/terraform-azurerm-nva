@@ -56,6 +56,7 @@ variable "network_interfaces" {
   type = map(object({
     accelerated_networking_enabled = optional(bool)
     name                           = optional(string)
+    order                          = optional(number, null)
     primary_interface              = optional(string, false)
     private_ip_address             = optional(string)
     private_ip_address_allocation  = optional(string, "Dynamic")
