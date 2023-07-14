@@ -22,7 +22,7 @@ resource "azurerm_public_ip" "nva" {
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "3f79c842-3baf-4301-b9a5-6ca20364b9b1"
+    avm_yor_trace            = "e231f8a8-3ee1-4839-8e47-e7470019b4e3"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 }
 
@@ -40,7 +40,7 @@ resource "azurerm_network_interface" "nva" {
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "e64c67b2-ee88-407e-8966-615787d3a1b7"
+    avm_yor_trace            = "4cde1a5c-1c39-4a45-b7cd-a63f409b37ea"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 
   ip_configuration {
@@ -78,7 +78,7 @@ resource "azurerm_linux_virtual_machine" "nva" {
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "5c9d18fa-096a-48c4-9a6a-a7d3dfed2f20"
+    avm_yor_trace            = "9974f659-eb38-4083-8118-7545e39fc62f"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 
   os_disk {
