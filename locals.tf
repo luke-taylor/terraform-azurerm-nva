@@ -40,16 +40,16 @@ locals {
       }
     }
   }
-  other_nics_order_keys = {
-    for k, v in var.network_interfaces : v.order == null ? index(keys(var.network_interfaces), k) : v.order => k if !v.primary_interface
-  }
-  sort_other_nics_order_keys = sort(keys(local.other_nics_order_keys))
   other_network_interface_keys = [
     for v in local.sort_other_nics_order_keys : local.other_nics_order_keys[v]
   ]
+  other_nics_order_keys = {
+    for k, v in var.network_interfaces : v.order == null ? index(keys(var.network_interfaces), k) : v.order => k if !v.primary_interface
+  }
   primary_network_interface_key = element([
     for k, v in var.network_interfaces : k if v.primary_interface
   ], 0)
+  sort_other_nics_order_keys = sort(keys(local.other_nics_order_keys))
 }
 
 locals {
