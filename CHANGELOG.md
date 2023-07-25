@@ -4,6 +4,7 @@
 
 **Merged pull requests:**
 
+- Update Checkov [\#8](https://github.com/luke-taylor/terraform-azurerm-nva/pull/8) ([luke-taylor](https://github.com/luke-taylor))
 - Added NIC Ordering Capability [\#5](https://github.com/luke-taylor/terraform-azurerm-nva/pull/5) ([luke-taylor](https://github.com/luke-taylor))
 - Update README [\#4](https://github.com/luke-taylor/terraform-azurerm-nva/pull/4) ([luke-taylor](https://github.com/luke-taylor))
 - Update Custom Data Input [\#3](https://github.com/luke-taylor/terraform-azurerm-nva/pull/3) ([luke-taylor](https://github.com/luke-taylor))
