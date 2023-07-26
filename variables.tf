@@ -78,7 +78,7 @@ variable "network_interfaces" {
   }
 }
 
-variable "nva_config_file_path" {
+variable "nva_config_input" {
   type        = string
   default     = ""
   description = "The custom data to use for the virtual machine."
