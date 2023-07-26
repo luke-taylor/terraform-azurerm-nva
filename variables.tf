@@ -1,11 +1,28 @@
 variable "admin_password" {
   type        = string
   description = "The admin password for the virtual machine."
+  default     = ""
+}
+
+variable "password_authentication_enabled" {
+  type        = bool
+  description = "value for the password_authentication_enabled flag for the virtual machine."
+  default     = true
+  nullable    = false
+}
+
+variable "ssh_key" {
+  type        = string
+  description = "The public SSH key to use for the virtual machine."
+  default     = ""
+  nullable    = false
 }
 
 variable "admin_username" {
   type        = string
   description = "The admin username for the virtual machine."
+  default     = "azureuser"
+  nullable    = false
 }
 
 variable "image" {
@@ -31,6 +48,8 @@ variable "resource_group_name" {
 variable "virtual_machine_name" {
   type        = string
   description = "The name of the virtual machine."
+  default     = "vm-nva"
+  nullable    = false
 }
 
 variable "virtual_network_name" {
@@ -41,6 +60,8 @@ variable "virtual_network_name" {
 variable "vm_size" {
   type        = string
   description = "The size of the virtual machine."
+  default     = "Standard_D3_v2"
+  nullable    = false
 }
 
 variable "identity" {
@@ -69,8 +90,10 @@ variable "network_interfaces" {
       tags              = optional(map(string), {})
     }), {})
     subnet_config = object({
-      name             = optional(string)
-      address_prefixes = list(string)
+      name                          = optional(string)
+      address_prefixes              = list(string)
+      nsg_creation_enabled          = optional(bool, false)
+      nsg_allow_ssh_inbound_enabled = optional(bool, false)
     })
   }))
   default     = {}
@@ -80,6 +103,10 @@ variable "network_interfaces" {
   validation {
     condition     = length([for k, v in var.network_interfaces : v.primary_interface if v.primary_interface]) == 1
     error_message = "At least one and only one network interface can be marked as primary."
+  }
+  validation {
+    condition     = length(var.network_interfaces) > 0
+    error_message = "At least one network interface must be defined."
   }
 }
 

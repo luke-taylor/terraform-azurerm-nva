@@ -7,6 +7,42 @@ resource "azurerm_subnet" "nva" {
   virtual_network_name = each.value.virtual_network_name
 }
 
+resource "azurerm_network_security_group" "nva" {
+  for_each = local.network_security_groups
+
+  name                = each.value.name
+  location            = each.value.location
+  resource_group_name = each.value.resource_group_name
+
+  dynamic "security_rule" {
+    for_each = each.value.nsg_allow_ssh_inbound_enabled ? ["AllowSSHInbound"] : []
+    content {
+      name                       = "AllowSshInbound"
+      priority                   = 1000
+      direction                  = "Inbound"
+      access                     = "Allow"
+      protocol                   = "Tcp"
+      source_port_range          = "*"
+      destination_port_range     = "22"
+      source_address_prefix      = "*"
+      destination_address_prefix = "*"
+    }
+  }
+  tags = each.value.tags
+}
+
+resource "azurerm_subnet_network_security_group_association" "example" {
+  for_each = local.network_security_groups
+
+  subnet_id                 = azurerm_subnet.nva[each.key].id
+  network_security_group_id = azurerm_network_security_group.nva[each.key].id
+
+  depends_on = [
+    azurerm_subnet.nva,
+    azurerm_network_security_group.nva
+  ]
+}
+
 resource "azurerm_public_ip" "nva" {
   for_each = local.public_ips
 
@@ -70,7 +106,7 @@ resource "azurerm_linux_virtual_machine" "nva" {
   size                            = var.vm_size
   admin_password                  = var.admin_password
   custom_data                     = base64encode(local.custom_data)
-  disable_password_authentication = false
+  disable_password_authentication = !var.password_authentication_enabled
   tags = merge(var.tags, (/*<box>*/ (var.tracing_tags_enabled ? { for k, v in /*</box>*/ {
     avm_git_commit           = "3090f7478f660100b2a0f0a89b523ef56011f8fc"
     avm_git_file             = "main.tf"
@@ -93,6 +129,13 @@ resource "azurerm_linux_virtual_machine" "nva" {
       identity_ids = var.identity.identity_ids
     }
 
+  }
+  dynamic "admin_ssh_key" {
+    for_each = var.ssh_key == "" ? [] : ["AdminSshKey"]
+    content {
+      username   = var.admin_username
+      public_key = var.ssh_key
+    }
   }
   plan {
     name      = var.image.plan_id
