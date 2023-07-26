@@ -42,7 +42,7 @@ module "csr" {
   resource_group_name  = azurerm_resource_group.csr.name
   virtual_network_name = azurerm_virtual_network.csr.name
   location             = azurerm_resource_group.csr.location
-  nva_config_file_path = "${path.root}/csr_config.txt"
+  nva_config_input     = file("${path.root}/csr_config.txt")
   network_interfaces = {
     public = {
       primary_interface          = true

@@ -70,7 +70,7 @@ Content-Type: multipart/mixed; AZURE="==AZURE=="
 MIME-Version: 1.0
 
 --==AZURE==
-${var.nva_config_file_path == "" ? "" : file(var.nva_config_file_path)}
+${var.nva_config_input}
 --==AZURE==
 EOF
 }
