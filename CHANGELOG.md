@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/luke-taylor/terraform-azurerm-nva/tree/HEAD)
+
+**Merged pull requests:**
+
+- Update NVA Config var [\#10](https://github.com/luke-taylor/terraform-azurerm-nva/pull/10) ([luke-taylor](https://github.com/luke-taylor))
+
 ## [v0.1.1](https://github.com/luke-taylor/terraform-azurerm-nva/tree/v0.1.1) (2023-07-26)
 
 **Merged pull requests:**
