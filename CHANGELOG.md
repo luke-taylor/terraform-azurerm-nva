@@ -6,6 +6,7 @@
 
 - Update Checkov [\#8](https://github.com/luke-taylor/terraform-azurerm-nva/pull/8) ([luke-taylor](https://github.com/luke-taylor))
 - Bump github.com/gruntwork-io/terratest from 0.43.0 to 0.43.9 in /test [\#7](https://github.com/luke-taylor/terraform-azurerm-nva/pull/7) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump github.com/Azure/terraform-module-test-helper from 0.14.0 to 0.15.0 in /test [\#6](https://github.com/luke-taylor/terraform-azurerm-nva/pull/6) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Added NIC Ordering Capability [\#5](https://github.com/luke-taylor/terraform-azurerm-nva/pull/5) ([luke-taylor](https://github.com/luke-taylor))
 - Update README [\#4](https://github.com/luke-taylor/terraform-azurerm-nva/pull/4) ([luke-taylor](https://github.com/luke-taylor))
 - Update Custom Data Input [\#3](https://github.com/luke-taylor/terraform-azurerm-nva/pull/3) ([luke-taylor](https://github.com/luke-taylor))
