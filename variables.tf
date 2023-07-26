@@ -1,30 +1,3 @@
-variable "admin_password" {
-  type        = string
-  description = "The admin password for the virtual machine."
-  default     = ""
-}
-
-variable "password_authentication_enabled" {
-  type        = bool
-  description = "value for the password_authentication_enabled flag for the virtual machine."
-  default     = true
-  nullable    = false
-}
-
-variable "ssh_key" {
-  type        = string
-  description = "The public SSH key to use for the virtual machine."
-  default     = ""
-  nullable    = false
-}
-
-variable "admin_username" {
-  type        = string
-  description = "The admin username for the virtual machine."
-  default     = "azureuser"
-  nullable    = false
-}
-
 variable "image" {
   type = object({
     plan_id      = string
@@ -45,22 +18,21 @@ variable "resource_group_name" {
   description = "The name of the resource group."
 }
 
-variable "virtual_machine_name" {
-  type        = string
-  description = "The name of the virtual machine."
-  default     = "vm-nva"
-  nullable    = false
-}
-
 variable "virtual_network_name" {
   type        = string
   description = "The name of the virtual network."
 }
 
-variable "vm_size" {
+variable "admin_password" {
   type        = string
-  description = "The size of the virtual machine."
-  default     = "Standard_D3_v2"
+  default     = ""
+  description = "The admin password for the virtual machine."
+}
+
+variable "admin_username" {
+  type        = string
+  default     = "azureuser"
+  description = "The admin username for the virtual machine."
   nullable    = false
 }
 
@@ -104,10 +76,6 @@ variable "network_interfaces" {
     condition     = length([for k, v in var.network_interfaces : v.primary_interface if v.primary_interface]) == 1
     error_message = "At least one and only one network interface can be marked as primary."
   }
-  validation {
-    condition     = length(var.network_interfaces) > 0
-    error_message = "At least one network interface must be defined."
-  }
 }
 
 variable "nva_config_file_path" {
@@ -125,6 +93,20 @@ variable "os_disk" {
   })
   default     = {}
   description = "The os disk configuration to use for the virtual machine."
+  nullable    = false
+}
+
+variable "password_authentication_enabled" {
+  type        = bool
+  default     = true
+  description = "value for the password_authentication_enabled flag for the virtual machine."
+  nullable    = false
+}
+
+variable "ssh_key" {
+  type        = string
+  default     = ""
+  description = "The public SSH key to use for the virtual machine."
   nullable    = false
 }
 
@@ -147,5 +129,19 @@ variable "tracing_tags_prefix" {
   type        = string
   default     = "avm_"
   description = "Default prefix for generated tracing tags"
+  nullable    = false
+}
+
+variable "virtual_machine_name" {
+  type        = string
+  default     = "vm-nva"
+  description = "The name of the virtual machine."
+  nullable    = false
+}
+
+variable "vm_size" {
+  type        = string
+  default     = "Standard_D3_v2"
+  description = "The size of the virtual machine."
   nullable    = false
 }

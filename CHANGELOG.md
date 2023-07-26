@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/luke-taylor/terraform-azurerm-nva/tree/HEAD)
+
+**Merged pull requests:**
+
+- Add Network Security Group and SSH Option [\#9](https://github.com/luke-taylor/terraform-azurerm-nva/pull/9) ([luke-taylor](https://github.com/luke-taylor))
+
 ## [v0.1.0](https://github.com/luke-taylor/terraform-azurerm-nva/tree/v0.1.0) (2023-07-26)
 
 **Merged pull requests:**

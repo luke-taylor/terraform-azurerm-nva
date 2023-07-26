@@ -10,32 +10,40 @@ resource "azurerm_subnet" "nva" {
 resource "azurerm_network_security_group" "nva" {
   for_each = local.network_security_groups
 
-  name                = each.value.name
   location            = each.value.location
+  name                = each.value.name
   resource_group_name = each.value.resource_group_name
+  tags = merge(each.value.tags, (/*<box>*/ (var.tracing_tags_enabled ? { for k, v in /*</box>*/ {
+    avm_git_commit           = "81b80e50dacd858794aa847d89aeac4edf019c46"
+    avm_git_file             = "main.tf"
+    avm_git_last_modified_at = "2023-07-26 13:13:10"
+    avm_git_org              = "luke-taylor"
+    avm_git_repo             = "terraform-azurerm-nva"
+    avm_yor_name             = "nva"
+    avm_yor_trace            = "32a27cf6-e536-42da-8cf7-13aa8d142444"
+  } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 
   dynamic "security_rule" {
     for_each = each.value.nsg_allow_ssh_inbound_enabled ? ["AllowSSHInbound"] : []
     content {
+      access                     = "Allow"
+      destination_address_prefix = "*"
+      destination_port_range     = "22"
+      direction                  = "Inbound"
       name                       = "AllowSshInbound"
       priority                   = 1000
-      direction                  = "Inbound"
-      access                     = "Allow"
       protocol                   = "Tcp"
-      source_port_range          = "*"
-      destination_port_range     = "22"
       source_address_prefix      = "*"
-      destination_address_prefix = "*"
+      source_port_range          = "*"
     }
   }
-  tags = each.value.tags
 }
 
 resource "azurerm_subnet_network_security_group_association" "example" {
   for_each = local.network_security_groups
 
-  subnet_id                 = azurerm_subnet.nva[each.key].id
   network_security_group_id = azurerm_network_security_group.nva[each.key].id
+  subnet_id                 = azurerm_subnet.nva[each.key].id
 
   depends_on = [
     azurerm_subnet.nva,
@@ -58,7 +66,7 @@ resource "azurerm_public_ip" "nva" {
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "e61ea76d-f7c8-4f4e-8d6e-a35e2a2b2996"
+    avm_yor_trace            = "9a47085e-9c45-4731-b8cc-41146db18142"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 }
 
@@ -76,7 +84,7 @@ resource "azurerm_network_interface" "nva" {
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "80e4aebe-a872-4203-9308-c682e45d9d5e"
+    avm_yor_trace            = "bf7cf1d6-ae23-4452-82ce-d86885f9cd9f"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 
   ip_configuration {
@@ -108,19 +116,26 @@ resource "azurerm_linux_virtual_machine" "nva" {
   custom_data                     = base64encode(local.custom_data)
   disable_password_authentication = !var.password_authentication_enabled
   tags = merge(var.tags, (/*<box>*/ (var.tracing_tags_enabled ? { for k, v in /*</box>*/ {
-    avm_git_commit           = "3090f7478f660100b2a0f0a89b523ef56011f8fc"
+    avm_git_commit           = "81b80e50dacd858794aa847d89aeac4edf019c46"
     avm_git_file             = "main.tf"
-    avm_git_last_modified_at = "2023-07-12 15:39:02"
+    avm_git_last_modified_at = "2023-07-26 13:13:10"
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "50b26c52-45e7-47f3-9ace-faf0e56a9f45"
+    avm_yor_trace            = "b67cc154-ba1c-4df4-9b34-e4fbde69da01"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 
   os_disk {
     caching              = var.os_disk.caching
     storage_account_type = var.os_disk.storage_account_type
     name                 = var.os_disk.name
+  }
+  dynamic "admin_ssh_key" {
+    for_each = var.ssh_key == "" ? [] : ["AdminSshKey"]
+    content {
+      public_key = var.ssh_key
+      username   = var.admin_username
+    }
   }
   dynamic "identity" {
     for_each = var.identity == null ? [] : ["Identity"]
@@ -129,13 +144,6 @@ resource "azurerm_linux_virtual_machine" "nva" {
       identity_ids = var.identity.identity_ids
     }
 
-  }
-  dynamic "admin_ssh_key" {
-    for_each = var.ssh_key == "" ? [] : ["AdminSshKey"]
-    content {
-      username   = var.admin_username
-      public_key = var.ssh_key
-    }
   }
   plan {
     name      = var.image.plan_id
