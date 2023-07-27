@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased](https://github.com/luke-taylor/terraform-azurerm-nva/tree/HEAD)
+## [v0.1.3](https://github.com/luke-taylor/terraform-azurerm-nva/tree/v0.1.3) (2023-07-27)
 
 **Merged pull requests:**
 
