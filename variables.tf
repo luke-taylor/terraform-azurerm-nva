@@ -45,6 +45,13 @@ variable "identity" {
   description = "values for the identity to use for the virtual machine."
 }
 
+variable "name" {
+  type        = string
+  default     = "vm-nva"
+  description = "The name of the virtual machine."
+  nullable    = false
+}
+
 variable "network_interfaces" {
   type = map(object({
     accelerated_networking_enabled = optional(bool)
@@ -103,6 +110,13 @@ variable "password_authentication_enabled" {
   nullable    = false
 }
 
+variable "size" {
+  type        = string
+  default     = "Standard_D3_v2"
+  description = "The size of the virtual machine."
+  nullable    = false
+}
+
 variable "ssh_key" {
   type        = string
   default     = ""
@@ -129,19 +143,5 @@ variable "tracing_tags_prefix" {
   type        = string
   default     = "avm_"
   description = "Default prefix for generated tracing tags"
-  nullable    = false
-}
-
-variable "name" {
-  type        = string
-  default     = "vm-nva"
-  description = "The name of the virtual machine."
-  nullable    = false
-}
-
-variable "size" {
-  type        = string
-  default     = "Standard_D3_v2"
-  description = "The size of the virtual machine."
   nullable    = false
 }

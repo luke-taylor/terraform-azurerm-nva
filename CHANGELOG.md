@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/luke-taylor/terraform-azurerm-nva/tree/HEAD)
+
+**Merged pull requests:**
+
+- Update Variable Names [\#11](https://github.com/luke-taylor/terraform-azurerm-nva/pull/11) ([luke-taylor](https://github.com/luke-taylor))
+
 ## [v0.1.2](https://github.com/luke-taylor/terraform-azurerm-nva/tree/v0.1.2) (2023-07-26)
 
 **Merged pull requests:**

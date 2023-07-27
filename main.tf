@@ -20,7 +20,7 @@ resource "azurerm_network_security_group" "nva" {
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "18e62e95-c82a-4058-a9b9-78b909d4ba22"
+    avm_yor_trace            = "a98184ef-03f4-4dd4-9150-c6500a1b0d08"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 
   dynamic "security_rule" {
@@ -66,7 +66,7 @@ resource "azurerm_public_ip" "nva" {
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "0dfbdb41-2695-4787-a2ca-cbe4c73b2ff9"
+    avm_yor_trace            = "09811376-5ae3-4d8c-8d54-665ed3d280e8"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 }
 
@@ -84,7 +84,7 @@ resource "azurerm_network_interface" "nva" {
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "48ca249f-1bcf-4350-9bae-a83748e0dcf9"
+    avm_yor_trace            = "62fad725-419e-4838-9cf6-e6b03ab0d8e2"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 
   ip_configuration {
@@ -116,13 +116,13 @@ resource "azurerm_linux_virtual_machine" "nva" {
   custom_data                     = base64encode(local.custom_data)
   disable_password_authentication = !var.password_authentication_enabled
   tags = merge(var.tags, (/*<box>*/ (var.tracing_tags_enabled ? { for k, v in /*</box>*/ {
-    avm_git_commit           = "81b80e50dacd858794aa847d89aeac4edf019c46"
+    avm_git_commit           = "9dd997e6858cc3c9bd814219b77128ec5c79ca81"
     avm_git_file             = "main.tf"
-    avm_git_last_modified_at = "2023-07-26 13:13:10"
+    avm_git_last_modified_at = "2023-07-27 09:40:23"
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "352614af-44cf-44a5-92f0-f81d6ff69807"
+    avm_yor_trace            = "786a3fec-93cb-4f82-8730-cc806c17904f"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 
   os_disk {
