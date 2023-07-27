@@ -101,7 +101,7 @@ resource "azurerm_network_interface" "nva" {
 resource "azurerm_linux_virtual_machine" "nva" {
   admin_username = var.admin_username
   location       = var.location
-  name           = var.virtual_machine_name
+  name           = var.name
   network_interface_ids = concat(
     [
       azurerm_network_interface.nva[local.primary_network_interface_key].id
@@ -111,7 +111,7 @@ resource "azurerm_linux_virtual_machine" "nva" {
     ]
   )
   resource_group_name             = var.resource_group_name
-  size                            = var.vm_size
+  size                            = var.size
   admin_password                  = var.admin_password
   custom_data                     = base64encode(local.custom_data)
   disable_password_authentication = !var.password_authentication_enabled

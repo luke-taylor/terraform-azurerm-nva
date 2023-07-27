@@ -132,14 +132,14 @@ variable "tracing_tags_prefix" {
   nullable    = false
 }
 
-variable "virtual_machine_name" {
+variable "name" {
   type        = string
   default     = "vm-nva"
   description = "The name of the virtual machine."
   nullable    = false
 }
 
-variable "vm_size" {
+variable "size" {
   type        = string
   default     = "Standard_D3_v2"
   description = "The size of the virtual machine."
