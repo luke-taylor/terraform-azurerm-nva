@@ -37,8 +37,8 @@ module "csr" {
     plan_id      = "16_12-byol"
     version      = "latest"
   }
-  virtual_machine_name = "vm-csr"
-  vm_size              = "Standard_D3_v2"
+  name                 = "vm-csr"
+  size                 = "Standard_D3_v2"
   resource_group_name  = azurerm_resource_group.csr.name
   virtual_network_name = azurerm_virtual_network.csr.name
   location             = azurerm_resource_group.csr.location
