@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/luke-taylor/terraform-azurerm-nva/tree/HEAD)
+
+**Merged pull requests:**
+
+- Fix: NSG Name [\#13](https://github.com/luke-taylor/terraform-azurerm-nva/pull/13) ([luke-taylor](https://github.com/luke-taylor))
+
 ## [v0.1.4](https://github.com/luke-taylor/terraform-azurerm-nva/tree/v0.1.4) (2023-07-28)
 
 **Merged pull requests:**
