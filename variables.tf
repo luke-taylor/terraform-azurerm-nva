@@ -55,6 +55,7 @@ variable "name" {
 variable "network_interfaces" {
   type = map(object({
     accelerated_networking_enabled = optional(bool)
+    enable_ip_forwarding           = optional(bool, true)
     name                           = optional(string)
     order                          = optional(number, null)
     primary_interface              = optional(string, false)
@@ -71,13 +72,40 @@ variable "network_interfaces" {
     subnet_config = object({
       name                          = optional(string)
       address_prefixes              = list(string)
+      network_security_group_id     = optional(string, null)
       nsg_creation_enabled          = optional(bool, false)
       nsg_allow_ssh_inbound_enabled = optional(bool, false)
     })
   }))
   default     = {}
-  description = "A map of network_interfaces to create."
-  nullable    = false
+  description = <<DESCRIPTION
+A map of network_interfaces to create.
+
+- subnet_config: (Required) A subnet_config block as defined below.
+  - name: (Optional) The name of the Subnet. Changing this forces a new resource to be created.
+  - address_prefixes: (Required) A list of address prefixes for the Subnet.
+  - network_security_group_id: (Optional) The ID of the Network Security Group to associate with the Subnet.
+  - nsg_creation_enabled: (Optional) Should a Network Security Group be created for this Subnet? Defaults to false.
+  - nsg_allow_ssh_inbound_enabled: (Optional) Should SSH inbound traffic be allowed through the Network Security Group? Defaults to false.
+
+- accelerated_networking_enabled: (Optional) Is Accelerated Networking enabled for this Network Interface? Defaults to false.
+- enable_ip_forwarding: (Optional) Is IP Forwarding enabled on this Network Interface? Defaults to true.
+- name: (Optional) The name of the Network Interface. Changing this forces a new resource to be created.
+- order: (Optional) The order in which this Network Interface is created relative to other Network Interfaces. Takes map order otherwise. Primary Interface is always first.
+- primary_interface: (Optional) Is this the primary Network Interface? Must be set to true for the first Network Interface added to a Virtual Machine. Defaults to false.
+- private_ip_address: (Optional) The Private IP Address to assign to the Network Interface. If no value is provided, a dynamic one will be created.
+- private_ip_address_allocation: (Optional) The allocation method to use for the Private IP Address. Possible values are Static and Dynamic. Defaults to Dynamic.
+- public_ip_creation_enabled: (Optional) Should a Public IP Address be created for this Network Interface? Defaults to false.
+- tags: (Optional) A mapping of tags to assign to the resource.
+
+- public_ip_config: (Optional) A public_ip_config block as defined below.
+  - name: (Optional) The name of the Public IP Address. Changing this forces a new resource to be created.
+  - allocation_method: (Optional) The allocation method to use for the Public IP Address. Possible values are Static and Dynamic. Defaults to Dynamic.
+  - sku: (Optional) The SKU of the Public IP Address. Possible values are Basic and Standard. Defaults to Basic.
+  - tags: (Optional) A mapping of tags to assign to the resource.
+DESCRIPTION
+
+  nullable = false
 
   validation {
     condition     = length([for k, v in var.network_interfaces : v.primary_interface if v.primary_interface]) == 1

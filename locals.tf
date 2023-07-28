@@ -36,12 +36,21 @@ locals {
 }
 
 locals {
+  network_security_group_associations = {
+    for k, v in var.network_interfaces : k => {
+      network_security_group_id = v.subnet_config.network_security_group_id
+    }
+    if !v.subnet_config.nsg_creation_enabled && v.subnet_config.network_security_group_id != null
+  }
+}
+
+locals {
   network_interfaces = {
     for k, v in var.network_interfaces : k => {
       name                          = coalesce(v.name, "nic-${k}")
       location                      = var.location
       resource_group_name           = var.resource_group_name
-      enable_ip_forwarding          = true
+      enable_ip_forwarding          = v.enable_ip_forwarding
       enable_accelerated_networking = v.accelerated_networking_enabled
       public_ip_creation_enabled    = v.public_ip_creation_enabled
       tags                          = v.tags
