@@ -4,6 +4,7 @@
 
 **Merged pull requests:**
 
+- Update Test [\#16](https://github.com/luke-taylor/terraform-azurerm-nva/pull/16) ([luke-taylor](https://github.com/luke-taylor))
 - Update Plan for MPA [\#15](https://github.com/luke-taylor/terraform-azurerm-nva/pull/15) ([luke-taylor](https://github.com/luke-taylor))
 - Update Default Naming [\#14](https://github.com/luke-taylor/terraform-azurerm-nva/pull/14) ([luke-taylor](https://github.com/luke-taylor))
 

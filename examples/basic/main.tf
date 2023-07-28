@@ -9,9 +9,9 @@ resource "random_password" "password" {
 }
 
 resource "azurerm_marketplace_agreement" "csr" {
-  publisher = "cisco"
   offer     = "cisco-csr-1000v"
   plan      = "16_12-byol"
+  publisher = "cisco"
 }
 
 resource "azurerm_resource_group" "csr" {
