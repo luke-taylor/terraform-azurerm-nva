@@ -3,7 +3,7 @@ locals {
     for k, v in var.network_interfaces : k => {
       allocation_method   = v.public_ip_config.allocation_method
       location            = var.location
-      name                = coalesce(v.public_ip_config.name, "pip-${k}")
+      name                = coalesce(v.public_ip_config.name, "pip-${lookup(local.subnets[k], "name", k)}")
       resource_group_name = var.resource_group_name
       sku                 = v.public_ip_config.sku
       tags                = v.public_ip_config.tags
@@ -47,7 +47,7 @@ locals {
 locals {
   network_interfaces = {
     for k, v in var.network_interfaces : k => {
-      name                          = coalesce(v.name, "nic-${k}")
+      name                          = coalesce(v.name, "nic-${k}-${var.name}")
       location                      = var.location
       resource_group_name           = var.resource_group_name
       enable_ip_forwarding          = v.enable_ip_forwarding
