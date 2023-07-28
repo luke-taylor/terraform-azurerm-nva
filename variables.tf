@@ -45,6 +45,13 @@ variable "identity" {
   description = "values for the identity to use for the virtual machine."
 }
 
+variable "marketplace_image" {
+  type        = bool
+  default     = false
+  description = "Whether the image is a marketplace image."
+  nullable    = false
+}
+
 variable "name" {
   type        = string
   default     = "vm-nva"
