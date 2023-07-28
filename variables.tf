@@ -104,8 +104,7 @@ A map of network_interfaces to create.
   - sku: (Optional) The SKU of the Public IP Address. Possible values are Basic and Standard. Defaults to Basic.
   - tags: (Optional) A mapping of tags to assign to the resource.
 DESCRIPTION
-
-  nullable = false
+  nullable    = false
 
   validation {
     condition     = length([for k, v in var.network_interfaces : v.primary_interface if v.primary_interface]) == 1

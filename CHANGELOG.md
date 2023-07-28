@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/luke-taylor/terraform-azurerm-nva/tree/HEAD)
+
+**Merged pull requests:**
+
+- Add BYO NSG Option and Optional Ip Forwarding [\#12](https://github.com/luke-taylor/terraform-azurerm-nva/pull/12) ([luke-taylor](https://github.com/luke-taylor))
+
 ## [v0.1.3](https://github.com/luke-taylor/terraform-azurerm-nva/tree/v0.1.3) (2023-07-27)
 
 **Merged pull requests:**
