@@ -145,11 +145,17 @@ resource "azurerm_linux_virtual_machine" "nva" {
     }
 
   }
-  plan {
-    name      = var.image.plan_id
-    product   = var.image.product_id
-    publisher = var.image.publisher_id
+
+  dynamic "plan" {
+    for_each = var.marketplace_image ? ["Plan"] : []
+
+    content {
+      name      = var.image.plan_id
+      product   = var.image.product_id
+      publisher = var.image.publisher_id
+    }
   }
+
   source_image_reference {
     offer     = var.image.product_id
     publisher = var.image.publisher_id

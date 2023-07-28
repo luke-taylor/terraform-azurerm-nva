@@ -29,8 +29,9 @@ resource "azurerm_virtual_network" "csr" {
 module "csr" {
   source = "../.."
 
-  admin_password = random_password.password.result
-  admin_username = "azureuser"
+  admin_password    = random_password.password.result
+  admin_username    = "azureuser"
+  marketplace_image = true
   image = {
     publisher_id = "cisco"
     product_id   = "cisco-csr-1000v"
