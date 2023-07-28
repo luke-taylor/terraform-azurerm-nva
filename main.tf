@@ -39,10 +39,10 @@ resource "azurerm_network_security_group" "nva" {
   }
 }
 
-resource "azurerm_subnet_network_security_group_association" "example" {
-  for_each = local.network_security_groups
+resource "azurerm_subnet_network_security_group_association" "nva" {
+  for_each = merge(local.network_security_groups, local.network_security_group_associations)
 
-  network_security_group_id = azurerm_network_security_group.nva[each.key].id
+  network_security_group_id = try(azurerm_network_security_group.nva[each.key].id, each.value.network_security_group_id)
   subnet_id                 = azurerm_subnet.nva[each.key].id
 
   depends_on = [
