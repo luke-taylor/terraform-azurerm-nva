@@ -96,6 +96,10 @@ module "csr" {
       }
     }
   }
+
+  depends_on = [
+    azurerm_marketplace_agreement.csr
+  ]
 }
 
 ```
