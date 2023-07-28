@@ -8,11 +8,11 @@ resource "random_password" "password" {
   special          = true
 }
 
-# resource "azurerm_marketplace_agreement" "csr" {
-#   publisher = "cisco"
-#   offer     = "cisco-csr-1000v"
-#   plan      = "16_12-byol"
-# }
+resource "azurerm_marketplace_agreement" "csr" {
+  publisher = "cisco"
+  offer     = "cisco-csr-1000v"
+  plan      = "16_12-byol"
+}
 
 resource "azurerm_resource_group" "csr" {
   location = "northeurope"
@@ -58,5 +58,9 @@ module "csr" {
       }
     }
   }
+
+  depends_on = [
+    azurerm_marketplace_agreement.csr
+  ]
 }
 
