@@ -25,7 +25,7 @@ locals {
 locals {
   network_security_groups = {
     for k, v in var.network_interfaces : k => {
-      name                          = "nsg-${lookup(local.subnets[k], "name", k)}}"
+      name                          = "nsg-${lookup(local.subnets[k], "name", k)}"
       location                      = var.location
       nsg_allow_ssh_inbound_enabled = v.subnet_config.nsg_allow_ssh_inbound_enabled
       resource_group_name           = var.resource_group_name
