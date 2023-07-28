@@ -20,7 +20,7 @@ resource "azurerm_network_security_group" "nva" {
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "cf93b045-461f-40aa-90e6-e303822b558d"
+    avm_yor_trace            = "3257211e-e813-4161-89fb-a1299bd86250"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 
   dynamic "security_rule" {
@@ -66,7 +66,7 @@ resource "azurerm_public_ip" "nva" {
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "5c6f4f89-1103-44ea-a1de-bf337194f820"
+    avm_yor_trace            = "d7625af0-9912-44bd-9043-715b077027b4"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 }
 
@@ -84,7 +84,7 @@ resource "azurerm_network_interface" "nva" {
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "d51ac0e6-73db-46d6-8cfb-b6f834ec3640"
+    avm_yor_trace            = "7f459a16-d1d9-4f7a-9b72-8ff41785511a"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 
   ip_configuration {
@@ -116,13 +116,13 @@ resource "azurerm_linux_virtual_machine" "nva" {
   custom_data                     = base64encode(local.custom_data)
   disable_password_authentication = !var.password_authentication_enabled
   tags = merge(var.tags, (/*<box>*/ (var.tracing_tags_enabled ? { for k, v in /*</box>*/ {
-    avm_git_commit           = "9dd997e6858cc3c9bd814219b77128ec5c79ca81"
+    avm_git_commit           = "446f6f8fafd3d1047672af01fff1131231a0079a"
     avm_git_file             = "main.tf"
-    avm_git_last_modified_at = "2023-07-27 09:40:23"
+    avm_git_last_modified_at = "2023-07-28 15:13:38"
     avm_git_org              = "luke-taylor"
     avm_git_repo             = "terraform-azurerm-nva"
     avm_yor_name             = "nva"
-    avm_yor_trace            = "761167f2-526a-42d8-bcf1-f6f461fec036"
+    avm_yor_trace            = "5868d2f5-ce01-43fe-8351-a62095503363"
   } /*<box>*/ : replace(k, "avm_", var.tracing_tags_prefix) => v } : {}) /*</box>*/))
 
   os_disk {
@@ -145,7 +145,6 @@ resource "azurerm_linux_virtual_machine" "nva" {
     }
 
   }
-
   dynamic "plan" {
     for_each = var.marketplace_image ? ["Plan"] : []
 
@@ -155,7 +154,6 @@ resource "azurerm_linux_virtual_machine" "nva" {
       publisher = var.image.publisher_id
     }
   }
-
   source_image_reference {
     offer     = var.image.product_id
     publisher = var.image.publisher_id

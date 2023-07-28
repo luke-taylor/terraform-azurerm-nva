@@ -4,6 +4,7 @@
 
 **Merged pull requests:**
 
+- Update Plan for MPA [\#15](https://github.com/luke-taylor/terraform-azurerm-nva/pull/15) ([luke-taylor](https://github.com/luke-taylor))
 - Update Default Naming [\#14](https://github.com/luke-taylor/terraform-azurerm-nva/pull/14) ([luke-taylor](https://github.com/luke-taylor))
 
 ## [v0.1.5](https://github.com/luke-taylor/terraform-azurerm-nva/tree/v0.1.5) (2023-07-28)
