@@ -3,7 +3,7 @@ locals {
     for k, v in var.network_interfaces : k => {
       allocation_method   = v.public_ip_config.allocation_method
       location            = var.location
-      name                = coalesce(v.public_ip_config.name, "pip-${lookup(local.subnets[k], "name", k)}")
+      name                = coalesce(v.public_ip_config.name, "pip-${lookup(local.network_interfaces[k], "name", k)}")
       resource_group_name = var.resource_group_name
       sku                 = v.public_ip_config.sku
       tags                = v.public_ip_config.tags
@@ -25,7 +25,7 @@ locals {
 locals {
   network_security_groups = {
     for k, v in var.network_interfaces : k => {
-      name                          = "nsg-${lookup(local.subnets[k], "name", k)}"
+      name                          = "nsg-${var.virtual_network_name}-${lookup(local.subnets[k], "name", k)}"
       location                      = var.location
       nsg_allow_ssh_inbound_enabled = v.subnet_config.nsg_allow_ssh_inbound_enabled
       resource_group_name           = var.resource_group_name
