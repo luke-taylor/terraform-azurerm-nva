@@ -1,9 +1,10 @@
 variable "image" {
   type = object({
-    plan_id      = string
-    publisher_id = string
-    product_id   = string
-    version      = optional(string, "latest")
+    marketplace_image = optional(bool, false)
+    plan_id           = string
+    product_id        = string
+    publisher_id      = string
+    version           = optional(string, "latest")
   })
   description = "values for the image to use for the virtual machine."
 }
@@ -43,13 +44,6 @@ variable "identity" {
   })
   default     = null
   description = "values for the identity to use for the virtual machine."
-}
-
-variable "marketplace_image" {
-  type        = bool
-  default     = false
-  description = "Whether the image is a marketplace image."
-  nullable    = false
 }
 
 variable "name" {

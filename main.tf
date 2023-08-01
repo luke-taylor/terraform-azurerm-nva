@@ -146,7 +146,7 @@ resource "azurerm_linux_virtual_machine" "nva" {
 
   }
   dynamic "plan" {
-    for_each = var.marketplace_image ? ["Plan"] : []
+    for_each = var.image.marketplace_image ? ["Plan"] : []
 
     content {
       name      = var.image.plan_id
