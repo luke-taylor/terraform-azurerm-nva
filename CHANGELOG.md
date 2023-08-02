@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/luke-taylor/terraform-azurerm-nva/tree/HEAD)
+
+**Merged pull requests:**
+
+- Update Marketplace Conditional [\#20](https://github.com/luke-taylor/terraform-azurerm-nva/pull/20) ([luke-taylor](https://github.com/luke-taylor))
+
 ## [v0.1.6](https://github.com/luke-taylor/terraform-azurerm-nva/tree/v0.1.6) (2023-07-28)
 
 **Merged pull requests:**
