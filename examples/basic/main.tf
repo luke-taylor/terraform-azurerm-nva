@@ -29,14 +29,14 @@ resource "azurerm_virtual_network" "csr" {
 module "csr" {
   source = "../.."
 
-  admin_password    = random_password.password.result
-  admin_username    = "azureuser"
-  marketplace_image = true
+  admin_password = random_password.password.result
+  admin_username = "azureuser"
   image = {
-    publisher_id = "cisco"
-    product_id   = "cisco-csr-1000v"
-    plan_id      = "16_12-byol"
-    version      = "latest"
+    marketplace_image = true
+    publisher_id      = azurerm_marketplace_agreement.csr.publisher
+    product_id        = azurerm_marketplace_agreement.csr.offer
+    plan_id           = azurerm_marketplace_agreement.csr.plan
+    version           = "latest"
   }
   name                 = "vm-csr"
   size                 = "Standard_D3_v2"
@@ -58,9 +58,5 @@ module "csr" {
       }
     }
   }
-
-  depends_on = [
-    azurerm_marketplace_agreement.csr
-  ]
 }
 
