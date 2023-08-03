@@ -6,6 +6,7 @@
 
 - Update Marketplace Conditional [\#20](https://github.com/luke-taylor/terraform-azurerm-nva/pull/20) ([luke-taylor](https://github.com/luke-taylor))
 - Bump github.com/gruntwork-io/terratest from 0.43.9 to 0.43.11 in /test [\#19](https://github.com/luke-taylor/terraform-azurerm-nva/pull/19) ([dependabot[bot]](https://github.com/apps/dependabot))
+- Bump github.com/Azure/terraform-module-test-helper from 0.15.0 to 0.16.0 in /test [\#18](https://github.com/luke-taylor/terraform-azurerm-nva/pull/18) ([dependabot[bot]](https://github.com/apps/dependabot))
 
 ## [v0.1.6](https://github.com/luke-taylor/terraform-azurerm-nva/tree/v0.1.6) (2023-07-28)
 
