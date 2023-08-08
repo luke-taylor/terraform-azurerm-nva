@@ -30,15 +30,6 @@ output "public_ips" {
   }
 }
 
-output "virtual_machine" {
-  description = "value is a map of objects with the following attributes: id, name, identity_id"
-  value = {
-    id          = azurerm_linux_virtual_machine.nva.id
-    name        = azurerm_linux_virtual_machine.nva.name
-    identity_id = try(azurerm_linux_virtual_machine.nva.identity[0].principal_id, null)
-  }
-}
-
 output "subnets" {
   description = "value is a map of objects with the following attributes: id, name, address_prefixes"
   value = {
@@ -47,5 +38,14 @@ output "subnets" {
       name             = v.name
       address_prefixes = v.address_prefixes
     }
+  }
+}
+
+output "virtual_machine" {
+  description = "value is a map of objects with the following attributes: id, name, identity_id"
+  value = {
+    id          = azurerm_linux_virtual_machine.nva.id
+    name        = azurerm_linux_virtual_machine.nva.name
+    identity_id = try(azurerm_linux_virtual_machine.nva.identity[0].principal_id, null)
   }
 }
