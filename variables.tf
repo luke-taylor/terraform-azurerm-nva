@@ -64,13 +64,13 @@ variable "network_interfaces" {
     private_ip_address_allocation  = optional(string, "Dynamic")
     public_ip_creation_enabled     = optional(bool, false)
     tags                           = optional(map(string), {})
-    public_ip_config = optional(object({
+    public_ip = optional(object({
       name              = optional(string)
       allocation_method = optional(string, "Dynamic")
       sku               = optional(string)
       tags              = optional(map(string), {})
     }), {})
-    subnet_config = object({
+    subnet = object({
       name                          = optional(string)
       address_prefixes              = list(string)
       network_security_group_id     = optional(string, null)
@@ -82,7 +82,7 @@ variable "network_interfaces" {
   description = <<DESCRIPTION
 A map of network_interfaces to create.
 
-- subnet_config: (Required) A subnet_config block as defined below.
+- subnet: (Required) A subnet block as defined below.
   - name: (Optional) The name of the Subnet. Changing this forces a new resource to be created.
   - address_prefixes: (Required) A list of address prefixes for the Subnet.
   - network_security_group_id: (Optional) The ID of the Network Security Group to associate with the Subnet.
@@ -99,7 +99,7 @@ A map of network_interfaces to create.
 - public_ip_creation_enabled: (Optional) Should a Public IP Address be created for this Network Interface? Defaults to false.
 - tags: (Optional) A mapping of tags to assign to the resource.
 
-- public_ip_config: (Optional) A public_ip_config block as defined below.
+- public_ip: (Optional) A public_ip block as defined below.
   - name: (Optional) The name of the Public IP Address. Changing this forces a new resource to be created.
   - allocation_method: (Optional) The allocation method to use for the Public IP Address. Possible values are Static and Dynamic. Defaults to Dynamic.
   - sku: (Optional) The SKU of the Public IP Address. Possible values are Basic and Standard. Defaults to Basic.

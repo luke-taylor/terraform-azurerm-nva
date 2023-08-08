@@ -48,12 +48,12 @@ module "csr" {
     public = {
       primary_interface          = true
       public_ip_creation_enabled = true
-      subnet_config = {
+      subnet = {
         address_prefixes = ["10.0.1.0/24"]
       }
     }
     private = {
-      subnet_config = {
+      subnet = {
         address_prefixes = ["10.0.2.0/24"]
       }
     }
