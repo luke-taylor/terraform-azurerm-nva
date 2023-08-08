@@ -158,5 +158,6 @@ No modules.
 | <a name="output_network_interfaces"></a> [network\_interfaces](#output\_network\_interfaces)                  | value is a map of objects with the following attributes: id, name, private\_ip\_address |
 | <a name="output_network_security_groups"></a> [network\_security\_groups](#output\_network\_security\_groups) | value is a map of objects with the following attributes: id, name                       |
 | <a name="output_public_ips"></a> [public\_ips](#output\_public\_ips)                                          | value is a map of objects with the following attributes: id, name, ip\_address          |
+| <a name="output_subnets"></a> [subnets](#output\_subnets)                                                     | value is a map of objects with the following attributes: id, name, address\_prefixes    |
 | <a name="output_virtual_machine"></a> [virtual\_machine](#output\_virtual\_machine)                           | value is a map of objects with the following attributes: id, name, identity\_id         |
 <!-- END_TF_DOCS -->
