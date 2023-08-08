@@ -1,12 +1,12 @@
 locals {
   public_ips = {
     for k, v in var.network_interfaces : k => {
-      allocation_method   = v.public_ip_config.allocation_method
+      allocation_method   = v.public_ip.allocation_method
       location            = var.location
-      name                = coalesce(v.public_ip_config.name, "pip-${lookup(local.network_interfaces[k], "name", k)}")
+      name                = coalesce(v.public_ip.name, "pip-${lookup(local.network_interfaces[k], "name", k)}")
       resource_group_name = var.resource_group_name
-      sku                 = v.public_ip_config.sku
-      tags                = v.public_ip_config.tags
+      sku                 = v.public_ip.sku
+      tags                = v.public_ip.tags
     }
     if v.public_ip_creation_enabled
   }
@@ -15,10 +15,10 @@ locals {
 locals {
   subnets = {
     for k, v in var.network_interfaces : k => {
-      name                 = coalesce(v.subnet_config.name, "sn-${k}")
+      name                 = coalesce(v.subnet.name, "sn-${k}")
       resource_group_name  = var.resource_group_name
       virtual_network_name = var.virtual_network_name
-      address_prefixes     = v.subnet_config.address_prefixes
+      address_prefixes     = v.subnet.address_prefixes
     }
   }
 }
@@ -27,20 +27,20 @@ locals {
     for k, v in var.network_interfaces : k => {
       name                          = "nsg-${var.virtual_network_name}-${lookup(local.subnets[k], "name", k)}"
       location                      = var.location
-      nsg_allow_ssh_inbound_enabled = v.subnet_config.nsg_allow_ssh_inbound_enabled
+      nsg_allow_ssh_inbound_enabled = v.subnet.nsg_allow_ssh_inbound_enabled
       resource_group_name           = var.resource_group_name
       tags                          = var.tags
     }
-    if v.subnet_config.nsg_creation_enabled
+    if v.subnet.nsg_creation_enabled
   }
 }
 
 locals {
   network_security_group_associations = {
     for k, v in var.network_interfaces : k => {
-      network_security_group_id = v.subnet_config.network_security_group_id
+      network_security_group_id = v.subnet.network_security_group_id
     }
-    if !v.subnet_config.nsg_creation_enabled && v.subnet_config.network_security_group_id != null
+    if !v.subnet.nsg_creation_enabled && v.subnet.network_security_group_id != null
   }
 }
 

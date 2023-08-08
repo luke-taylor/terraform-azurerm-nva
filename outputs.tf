@@ -38,3 +38,14 @@ output "virtual_machine" {
     identity_id = try(azurerm_linux_virtual_machine.nva.identity[0].principal_id, null)
   }
 }
+
+output "subnets" {
+  description = "value is a map of objects with the following attributes: id, name, address_prefixes"
+  value = {
+    for k, v in azurerm_subnet.nva : k => {
+      id               = v.id
+      name             = v.name
+      address_prefixes = v.address_prefixes
+    }
+  }
+}
