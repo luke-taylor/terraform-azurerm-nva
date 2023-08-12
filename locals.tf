@@ -15,7 +15,7 @@ locals {
 locals {
   subnets = {
     for k, v in var.network_interfaces : k => {
-      name                 = coalesce(v.subnet.name, "sn-${k}")
+      name                 = coalesce(v.subnet.name, "sn-${var.name}-${k}")
       resource_group_name  = var.resource_group_name
       virtual_network_name = var.virtual_network_name
       address_prefixes     = v.subnet.address_prefixes
@@ -25,7 +25,7 @@ locals {
 locals {
   network_security_groups = {
     for k, v in var.network_interfaces : k => {
-      name                          = "nsg-${var.virtual_network_name}-${lookup(local.subnets[k], "name", k)}"
+      name                          = coalesce(v.subnet.nsg_name, "nsg-${var.virtual_network_name}-${lookup(local.subnets[k], "name", k)}")
       location                      = var.location
       nsg_allow_ssh_inbound_enabled = v.subnet.nsg_allow_ssh_inbound_enabled
       resource_group_name           = var.resource_group_name
@@ -47,7 +47,7 @@ locals {
 locals {
   network_interfaces = {
     for k, v in var.network_interfaces : k => {
-      name                          = coalesce(v.name, "nic-${k}-${var.name}")
+      name                          = coalesce(v.name, "nic-${var.name}-${k}")
       location                      = var.location
       resource_group_name           = var.resource_group_name
       enable_ip_forwarding          = v.enable_ip_forwarding
