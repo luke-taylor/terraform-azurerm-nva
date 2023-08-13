@@ -38,7 +38,7 @@ module "csr" {
     plan_id           = azurerm_marketplace_agreement.csr.plan
     version           = "latest"
   }
-  name                 = "vm-csr"
+  name                 = "vm-csr-001"
   size                 = "Standard_D3_v2"
   resource_group_name  = azurerm_resource_group.csr.name
   virtual_network_name = azurerm_virtual_network.csr.name

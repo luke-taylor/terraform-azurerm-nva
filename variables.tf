@@ -74,8 +74,9 @@ variable "network_interfaces" {
       name                          = optional(string)
       address_prefixes              = list(string)
       network_security_group_id     = optional(string, null)
-      nsg_creation_enabled          = optional(bool, false)
       nsg_allow_ssh_inbound_enabled = optional(bool, false)
+      nsg_creation_enabled          = optional(bool, false)
+      nsg_name                      = optional(string, null)
     })
   }))
   default     = {}
@@ -86,8 +87,9 @@ A map of network_interfaces to create.
   - name: (Optional) The name of the Subnet. Changing this forces a new resource to be created.
   - address_prefixes: (Required) A list of address prefixes for the Subnet.
   - network_security_group_id: (Optional) The ID of the Network Security Group to associate with the Subnet.
-  - nsg_creation_enabled: (Optional) Should a Network Security Group be created for this Subnet? Defaults to false.
   - nsg_allow_ssh_inbound_enabled: (Optional) Should SSH inbound traffic be allowed through the Network Security Group? Defaults to false.
+  - nsg_creation_enabled: (Optional) Should a Network Security Group be created for this Subnet? Defaults to false.
+  - nsg_name: (Optional) The name of the Network Security Group to create for this Subnet. Changing this forces a new resource to be created.
 
 - accelerated_networking_enabled: (Optional) Is Accelerated Networking enabled for this Network Interface? Defaults to false.
 - enable_ip_forwarding: (Optional) Is IP Forwarding enabled on this Network Interface? Defaults to true.
