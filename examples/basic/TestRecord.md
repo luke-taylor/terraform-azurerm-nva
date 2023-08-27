@@ -1,3 +1,23 @@
+## 27 Aug 23 01:09 UTC
+
+Success: true
+
+### Versions
+
+Terraform v1.5.5
+on linux_amd64
++ provider registry.terraform.io/hashicorp/azurerm v3.71.0
++ provider registry.terraform.io/hashicorp/random v3.5.1
+
+Your version of Terraform is out of date! The latest version
+is 1.5.6. You can update by downloading from https://www.terraform.io/downloads.html
+
+### Error
+
+
+
+---
+
 ## 20 Aug 23 01:08 UTC
 
 Success: true
