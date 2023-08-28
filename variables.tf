@@ -63,6 +63,7 @@ variable "network_interfaces" {
     private_ip_address             = optional(string)
     private_ip_address_allocation  = optional(string, "Dynamic")
     public_ip_creation_enabled     = optional(bool, false)
+    subnet_id                      = optional(string, null)
     tags                           = optional(map(string), {})
     public_ip = optional(object({
       name              = optional(string)
@@ -83,14 +84,6 @@ variable "network_interfaces" {
   description = <<DESCRIPTION
 A map of network_interfaces to create.
 
-- subnet: (Required) A subnet block as defined below.
-  - name: (Optional) The name of the Subnet. Changing this forces a new resource to be created.
-  - address_prefixes: (Required) A list of address prefixes for the Subnet.
-  - network_security_group_id: (Optional) The ID of the Network Security Group to associate with the Subnet.
-  - nsg_allow_ssh_inbound_enabled: (Optional) Should SSH inbound traffic be allowed through the Network Security Group? Defaults to false.
-  - nsg_creation_enabled: (Optional) Should a Network Security Group be created for this Subnet? Defaults to false.
-  - nsg_name: (Optional) The name of the Network Security Group to create for this Subnet. Changing this forces a new resource to be created.
-
 - accelerated_networking_enabled: (Optional) Is Accelerated Networking enabled for this Network Interface? Defaults to false.
 - enable_ip_forwarding: (Optional) Is IP Forwarding enabled on this Network Interface? Defaults to true.
 - name: (Optional) The name of the Network Interface. Changing this forces a new resource to be created.
@@ -99,6 +92,7 @@ A map of network_interfaces to create.
 - private_ip_address: (Optional) The Private IP Address to assign to the Network Interface. If no value is provided, a dynamic one will be created.
 - private_ip_address_allocation: (Optional) The allocation method to use for the Private IP Address. Possible values are Static and Dynamic. Defaults to Dynamic.
 - public_ip_creation_enabled: (Optional) Should a Public IP Address be created for this Network Interface? Defaults to false.
+- subnet_id: (Optional) The ID of the Subnet which should be used for this Network Interface. Changing this forces a new resource to be created.
 - tags: (Optional) A mapping of tags to assign to the resource.
 
 - public_ip: (Optional) A public_ip block as defined below.
@@ -106,6 +100,16 @@ A map of network_interfaces to create.
   - allocation_method: (Optional) The allocation method to use for the Public IP Address. Possible values are Static and Dynamic. Defaults to Dynamic.
   - sku: (Optional) The SKU of the Public IP Address. Possible values are Basic and Standard. Defaults to Basic.
   - tags: (Optional) A mapping of tags to assign to the resource.
+
+- subnet: (Required) A subnet block as defined below.
+  - name: (Optional) The name of the Subnet. Changing this forces a new resource to be created.
+  - address_prefixes: (Required) A list of address prefixes for the Subnet.
+  - network_security_group_id: (Optional) The ID of the Network Security Group to associate with the Subnet.
+  - nsg_allow_ssh_inbound_enabled: (Optional) Should SSH inbound traffic be allowed through the Network Security Group? Defaults to false.
+  - nsg_creation_enabled: (Optional) Should a Network Security Group be created for this Subnet? Defaults to false.
+  - nsg_name: (Optional) The name of the Network Security Group to create for this Subnet. Changing this forces a new resource to be created.
+
+
 DESCRIPTION
   nullable    = false
 

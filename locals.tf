@@ -19,7 +19,7 @@ locals {
       resource_group_name  = var.resource_group_name
       virtual_network_name = var.virtual_network_name
       address_prefixes     = v.subnet.address_prefixes
-    }
+    } if v.subnet_id == null
   }
 }
 locals {
@@ -54,6 +54,7 @@ locals {
       enable_accelerated_networking = v.accelerated_networking_enabled
       public_ip_creation_enabled    = v.public_ip_creation_enabled
       tags                          = v.tags
+      subnet_id                     = v.subnet_id
       ip_configuration = {
         name                          = "ipconfig${k}"
         private_ip_address_allocation = "Dynamic"
