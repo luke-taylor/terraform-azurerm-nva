@@ -92,7 +92,7 @@ resource "azurerm_network_interface" "nva" {
     private_ip_address_allocation = each.value.ip_configuration.private_ip_address_allocation
     private_ip_address            = each.value.ip_configuration.private_ip_address
     public_ip_address_id          = each.value.public_ip_creation_enabled ? azurerm_public_ip.nva[each.key].id : null
-    subnet_id                     = azurerm_subnet.nva[each.key].id
+    subnet_id                     = coalesce(each.value.subnet_id, azurerm_subnet.nva[each.key].id)
   }
 
   depends_on = [azurerm_public_ip.nva, azurerm_subnet.nva]
