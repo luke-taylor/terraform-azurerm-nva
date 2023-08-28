@@ -71,14 +71,14 @@ variable "network_interfaces" {
       sku               = optional(string)
       tags              = optional(map(string), {})
     }), {})
-    subnet = object({
+    subnet = optional(object({
       name                          = optional(string)
       address_prefixes              = list(string)
       network_security_group_id     = optional(string, null)
       nsg_allow_ssh_inbound_enabled = optional(bool, false)
       nsg_creation_enabled          = optional(bool, false)
       nsg_name                      = optional(string, null)
-    })
+    }), null)
   }))
   default     = {}
   description = <<DESCRIPTION
@@ -116,6 +116,10 @@ DESCRIPTION
   validation {
     condition     = length([for k, v in var.network_interfaces : v.primary_interface if v.primary_interface]) == 1
     error_message = "At least one and only one network interface can be marked as primary."
+  }
+  validation {
+    condition     = alltrue([for k, v in var.network_interfaces : v.subnet != null if v.subnet_id == null])
+    error_message = "At least `subnet` or `sub` must be defined for each network interface."
   }
 }
 
