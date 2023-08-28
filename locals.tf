@@ -19,7 +19,7 @@ locals {
       resource_group_name  = var.resource_group_name
       virtual_network_name = var.virtual_network_name
       address_prefixes     = v.subnet.address_prefixes
-    } if v.subnet_id == null
+    } if v.subnet != null
   }
 }
 locals {
@@ -31,7 +31,7 @@ locals {
       resource_group_name           = var.resource_group_name
       tags                          = var.tags
     }
-    if v.subnet.nsg_creation_enabled
+    if try(v.subnet.nsg_creation_enabled, false)
   }
 }
 
@@ -40,7 +40,7 @@ locals {
     for k, v in var.network_interfaces : k => {
       network_security_group_id = v.subnet.network_security_group_id
     }
-    if !v.subnet.nsg_creation_enabled && v.subnet.network_security_group_id != null
+    if try(!v.subnet.nsg_creation_enabled && v.subnet.network_security_group_id != null, false)
   }
 }
 

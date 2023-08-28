@@ -26,6 +26,13 @@ resource "azurerm_virtual_network" "csr" {
   resource_group_name = azurerm_resource_group.csr.name
 }
 
+resource "azurerm_subnet" "csr" {
+  name                 = "sn-private"
+  resource_group_name  = azurerm_resource_group.csr.name
+  virtual_network_name = azurerm_virtual_network.csr.name
+  address_prefixes     = ["10.0.2.0/24"]
+}
+
 module "csr" {
   source = "../.."
 
@@ -53,9 +60,7 @@ module "csr" {
       }
     }
     private = {
-      subnet = {
-        address_prefixes = ["10.0.2.0/24"]
-      }
+      subnet_id = azurerm_subnet.csr.id
     }
   }
 }
