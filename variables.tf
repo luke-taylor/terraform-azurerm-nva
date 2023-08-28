@@ -117,10 +117,6 @@ DESCRIPTION
     condition     = length([for k, v in var.network_interfaces : v.primary_interface if v.primary_interface]) == 1
     error_message = "At least one and only one network interface can be marked as primary."
   }
-  validation {
-    condition     = alltrue([for k, v in var.network_interfaces : v.subnet != null if v.subnet_id == null])
-    error_message = "At least `subnet` or `sub` must be defined for each network interface."
-  }
 }
 
 variable "nva_config_input" {

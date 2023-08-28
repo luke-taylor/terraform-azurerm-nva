@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/luke-taylor/terraform-azurerm-nva/tree/HEAD)
+
+**Merged pull requests:**
+
+- Add validation [\#25](https://github.com/luke-taylor/terraform-azurerm-nva/pull/25) ([luke-taylor](https://github.com/luke-taylor))
+
 ## [v0.1.10](https://github.com/luke-taylor/terraform-azurerm-nva/tree/v0.1.10) (2023-08-28)
 
 **Merged pull requests:**
