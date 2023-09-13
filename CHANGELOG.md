@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased](https://github.com/luke-taylor/terraform-azurerm-nva/tree/HEAD)
+
+**Merged pull requests:**
+
+- Bump github.com/gruntwork-io/terratest from 0.43.12 to 0.43.13 in /test [\#26](https://github.com/luke-taylor/terraform-azurerm-nva/pull/26) ([dependabot[bot]](https://github.com/apps/dependabot))
+
 ## [v0.1.11](https://github.com/luke-taylor/terraform-azurerm-nva/tree/v0.1.11) (2023-08-28)
 
 **Merged pull requests:**
