@@ -4,6 +4,7 @@
 
 **Merged pull requests:**
 
+- Bump github.com/gruntwork-io/terratest from 0.44.0 to 0.45.0 in /test [\#28](https://github.com/luke-taylor/terraform-azurerm-nva/pull/28) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump github.com/gruntwork-io/terratest from 0.43.13 to 0.44.0 in /test [\#27](https://github.com/luke-taylor/terraform-azurerm-nva/pull/27) ([dependabot[bot]](https://github.com/apps/dependabot))
 - Bump github.com/gruntwork-io/terratest from 0.43.12 to 0.43.13 in /test [\#26](https://github.com/luke-taylor/terraform-azurerm-nva/pull/26) ([dependabot[bot]](https://github.com/apps/dependabot))
 
