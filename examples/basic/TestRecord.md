@@ -1,3 +1,23 @@
+## 20 Oct 24 01:20 UTC
+
+Success: false
+
+### Versions
+
+Terraform v1.9.7
+on linux_amd64
++ provider registry.terraform.io/hashicorp/azurerm v3.116.0
++ provider registry.terraform.io/hashicorp/random v3.6.3
+
+Your version of Terraform is out of date! The latest version
+is 1.9.8. You can update by downloading from https://www.terraform.io/downloads.html
+
+### Error
+
+
+
+---
+
 ## 13 Oct 24 01:18 UTC
 
 Success: false
